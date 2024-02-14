@@ -100,7 +100,7 @@ formula:
 - Then ELA = AppliedAmount
 - Else ELA = Max allowable amount
 
-### Creating PROI (predicted return of inverstment):
+### Creating PROI (prefered return of inverstment):
 - A: "AppliedAmount" ---> **LoanOriginalAmount** 
 - I: "Interest" ---> **BorrowerRate**
 - S: "Status" ---> **LoanCurrentDaysDelinquent**
