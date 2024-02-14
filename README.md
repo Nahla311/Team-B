@@ -63,9 +63,9 @@ the feature selection used here:
 
 ## SECTION 4: MODEL BUILDING
 ### PRE PROCESSING:
-standard scaling, one hot encoding, label encoding were imposed to build a good predicting model
+Standard scaling, one hot encoding, label encoding were imposed to build a good predicting model
 
-target variable for the classification model was created using this function
+Target variable for the classification model was created using this function
 converting loan status(target variable) to binary category by adding an another column Status:
 - def tgt_binary(df):
     - df["Loan_Status"] = df["ClosedDate"].apply(lambda x: 1 if pd.isnull(x) else 0)
@@ -79,7 +79,8 @@ For linear regression three target variables was to be derived using the pre exi
 -	Tenure ---> **LoanTenure**
 -	Principle repayment ---> **LP_CustomerPrinciplePayments**
 -	Interest ---> **BorrowerRate** <br />
-formula:
+
+Formula:
 **For each row in the dataset:**
 1. Calculate result_1 = P * r * 〖(1+r)〗^n
 2. Calculate result_2 = 〖(1+r)〗^n – 1
