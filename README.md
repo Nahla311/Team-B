@@ -3,6 +3,7 @@
 We study the borrower-, loan- and group- related determinants of performance predictability in an online P2P lending market by conceptualizing financial and social strength to predict borrower rate and whether the loan would be timely paid.
 
 ## SECTION 1: DATA & PROBLEM STATEMENT
+
 Problem statement:
 - There is a P2P (peer to peer) lending market, and this company provides loan on basis of their financial strengths and social strengths.
 - Financial Factors: - Credit Score - Income Level - Employment Status - Debt-to-Income Ratio - Loan Amount Requested - Previous Loan History - Monthly Expenses.
@@ -18,6 +19,7 @@ Data:
 <img width="608" alt="image" src="https://github.com/shaahidh/p2p-prediction/assets/56645593/52079d56-c6cf-4d72-bd3c-68a227832c2e">
 
 ## SECTION 2: EDA
+
 The EDA was conducted before treating outliers and null values and after treating them, to check for the differences it creates.
 ### EDA before treating outliers and null values:
 Univariate and Bi variate analysis was conducted and a better understanding of the data was found some key findings include:
@@ -40,7 +42,8 @@ Estimated Return w.r.t BorrowerAPR, BorrowerRate and the LenderYield are also gi
 ProsperScore, ProsperRating(numeric) having a positive correlation of 0.71
 
 ### EDA after outliers and null value treatments:
--We observed that we have more Current loans with 56576, such that loans are more in open state than the completed loans are 38074
+
+-We observed that we have more Current loans with 56576, such that loans are more in open state than the completed loans are 38074. 
 There are less cancelled loans with 5 and past due loans are with 806+265+313+363+304+16 = 2067 and that will be positive sign
 And people with final payments to done are 205.
 - It is observed that More people are taking loans for 36 months term are having loans 113937 loans.
@@ -54,7 +57,8 @@ Regression & Clustering analysis was also done to understand the relationship be
 ![image](https://github.com/shaahidh/p2p-prediction/assets/56645593/ad1310eb-113d-4b9e-b2d7-ea070071d37f)
 ![image](https://github.com/shaahidh/p2p-prediction/assets/56645593/16d162ea-7ad5-4f86-b4ad-317dfc010fb1)
 
-SECTION 3: FEATURE SELECTION
+## SECTION 3: FEATURE SELECTION
+
 Various feature selection techniques where used for feature selection, and each of these methods where used to build a model to find the best one
 the feature selection used here:
 - RFE
@@ -62,9 +66,9 @@ the feature selection used here:
 - PCA
 
 ## SECTION 4: MODEL BUILDING
-### PRE PROCESSING:
-Standard scaling, one hot encoding, label encoding were imposed to build a good predicting model
 
+### PRE PROCESSING:
+Standard scaling, one hot encoding, label encoding were imposed to build a good predicting model.
 Target variable for the classification model was created using this function
 converting loan status(target variable) to binary category by adding an another column Status:
 - def tgt_binary(df):
@@ -79,7 +83,6 @@ For linear regression three target variables was to be derived using the pre exi
 -	Tenure ---> **LoanTenure**
 -	Principle repayment ---> **LP_CustomerPrinciplePayments**
 -	Interest ---> **BorrowerRate** <br />
-
 Formula:
 **For each row in the dataset:**
 1. Calculate result_1 = P * r * 〖(1+r)〗^n
@@ -106,7 +109,7 @@ Formula:
 - S: "Status" ---> **LoanCurrentDaysDelinquent**
 - R: "Rating" ---> **ProsperRating(Alpha)**
 - P: "Payment" ---> **MonthlyLoanPayment**
-- L: "LoanPayment" ---> **LoanPrincipalPayments**
+- L: "LoanPayment" ---> **LP_CustomerPrincipalPayments**
 
 **Calculation Procedure:**
 **For each row in the dataset:**
@@ -122,10 +125,10 @@ Formula:
 - elif L > 10500
      PROI = PROI - 0.1
 
-**Checking for P**
-- If P in [2,3] :
+**Checking for R**
+- If R in [2,3] :
      PROI = PROI + 0.05
-- elif P = 6:
+- elif R = 6:
      PROI = PROI - 0.05
 
 **Checking for A**
@@ -148,9 +151,9 @@ Formula:
     
 ### MODELLING
 - Build a classification model to find out whether a loan can be provided or not.
-- build a multi regressor model to find out how much amount we can lend.
+- Build a multi regressor model to find out how much amount we can lend.
 these models were evalutated using cross validation method. 
-### building a classification model:
+### Building a classification model:
 For classification model we chose, random forest,Knn,XG boost, GBM.
 
 All these models where run with the feature selections iteratively and found out XGboost model gave the best performance 
@@ -169,7 +172,7 @@ The model metrics are given below:
    macro avg       0.99      0.99      0.99     34182
 weighted avg       0.99      0.99      0.99     34182
 
-### building a regressor model:
+### Building a regressor model:
 For regressor model we chose multilinear regressor, multi task lasso regressor (L1 norm).and we found out the best model was linear regressor and thus it was selected for the pipeline.
 
 All these models run with or without the feature selections iteratively and found out multi linear regressor with feature selection gave the best performance and thus it was selected for the final pipeline.
@@ -180,22 +183,20 @@ The model metrics are given below:
 - r2_score: 0.6376675358832489
 
 ## SECTION 5: pipeline development:
-Three pipeline models has to be created to facilitate smooth operation between all these models <br />
 
+Three pipeline models has to be created to facilitate smooth operation between all these models <br />
 Pipeline 1 was for classification:
 - Train test split -----> preprocessing ((numerical & categorical pipeline)standard scaling each of them) -----> classifier (Xgboost) <br />
 column transformer where used to combine both the numerical and categorical pipelines <br />
-
 Pipeline 2 was for regression:
 - Train test split -----> preprocessing ((numerical & categorical pipeline)standard scaling each of them) -----> regressor (linear regression)<br />
 column transformer where used to combine both the numerical and categorical pipelines <br />.
-
 Pipeline 3 was to combine both the results:
 - Save both pipelines in a dictionary
 - pipeline3 = {'pipeline1': pipeline1, 'pipeline2': pipeline2}
 
-
 ## SECTION 6: Deployment
+
 The P2P lending platform web application is developed using Flask, a Python web framework, enabling users to predict loan statuses and borrower rates through a user-friendly interface.
 
 Flask Application:
